@@ -1,9 +1,19 @@
 #include <stdio.h>
+
 int main() {
-    int i;
-    char input[6] = "Martin";
-    for(i=5; i >= 0; i--) {
-        printf("%s", input[i]);
+    char str[] = "Hello";
+    int length = 0;
+    while (str[length] != '\0') {
+        length++;
     }
+    for (int i = length; i >= 0; i--) {
+        if (str[i] == '\0') {
+            printf("Reverse: ");
+        } 
+        else {
+            printf("%c", str[i]);
+        }
+    }
+    printf("\n");
     return 0;
 }
