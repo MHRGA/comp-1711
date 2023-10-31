@@ -52,7 +52,7 @@ char read_from_file(char filename[], char mode[]) {
         char my_time[6];
         char my_steps[8]; // Code inspired by strsplit.c in Minerva
         tokeniseRecord(dataline, &my_delimiter, my_date, my_time, my_steps);
-        printf("%s/%s/%s", my_date, my_time, my_steps);
+        printf("%s/%s/%d\n", my_date, my_time, atoi(my_steps));
     }
     fclose(file);
 }
