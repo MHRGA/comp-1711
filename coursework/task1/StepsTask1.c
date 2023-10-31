@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-char number_of_records(char filename[], char mode[]) {
+int number_of_records(char filename[], char mode[]) {
     FILE *file = fopen(filename, mode);
     if (file == NULL) {
         perror("");
