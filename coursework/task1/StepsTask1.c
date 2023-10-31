@@ -13,7 +13,7 @@ int number_of_records(char filename[], char mode[]) {
     int i;
     while (fgets(line_buffer, buffer_size, file) != NULL) {
         i++;
-    }
+    } // Code inspired by read_from_file.c in Minerva
     return i;
 }
 
@@ -33,7 +33,7 @@ char read_from_file(char filename[], char mode[]) {
         char my_delimiter = ',';
         char my_date[11];
         char my_time[6];
-        char my_steps[8];
+        char my_steps[8]; // Code inspired by strsplit.c in Minerva
         tokeniseRecord(dataline, &my_delimiter, my_date, my_time, my_steps);
         printf("%s/%s/%s", my_date, my_time, my_steps);
     }
