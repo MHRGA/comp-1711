@@ -2,13 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct {
-	char date[11];
-	char time[6];
-	int steps;
-} FITNESS_DATA;
-
-void read_from_file(char filename[], char mode[]) {
+char number_of_records(char filename[], char mode[]) {
     FILE *file = fopen(filename, mode);
     if (file == NULL) {
         perror("");
@@ -16,52 +10,56 @@ void read_from_file(char filename[], char mode[]) {
     }
     int buffer_size = 100;
     char line_buffer[buffer_size];
-    fgets(line_buffer, buffer_size, file);
-    printf("%s", line_buffer);
-    fclose(file);
+    int i;
+    while (fgets(line_buffer, buffer_size, file) != NULL) {
+        i++;
+    }
+    return i;
 }
 
-FILE *open_file(char filename[], char mode[]) {
+char read_from_file(char filename[], char mode[]) {
     FILE *file = fopen(filename, mode);
     if (file == NULL) {
         perror("");
         exit(1);
     }
-    printf("%s", "success");
-    return file;
+    int buffer_size = 23;
+    char line_buffer[buffer_size];
+    int i;
+    for(i=0;i<3;i++) {
+        fgets(line_buffer, buffer_size, file);
+        char dataline[25];
+        strcpy(dataline, line_buffer);
+        char my_delimiter = ',';
+        char my_date[11];
+        char my_time[6];
+        char my_steps[8];
+        tokeniseRecord(dataline, &my_delimiter, my_date, my_time, my_steps);
+        printf("%s/%s/%s", my_date, my_time, my_steps);
+    }
+    fclose(file);
 }
 
-// This is your helper function. Do not change it in any way.
-// Inputs: character array representing a row; the delimiter character
-// Ouputs: date character array; time character array; steps character array
-void tokeniseRecord(const char *input, const char *delimiter,
-                    char *date, char *time, char *steps) {
-    // Create a copy of the input string as strtok modifies the string
+void tokeniseRecord(const char *input, const char *delimiter, char *date, char *time, char *steps) {
     char *inputCopy = strdup(input);
-    
-    // Tokenize the copied string
     char *token = strtok(inputCopy, delimiter);
-    if (token != NULL) {        strcpy(date, token);
+    if (token != NULL) {
+        strcpy(date, token);
     }
-    
     token = strtok(NULL, delimiter);
     if (token != NULL) {
         strcpy(time, token);
     }
-    
     token = strtok(NULL, delimiter);
     if (token != NULL) {
         strcpy(steps, token);
     }
-    
-    // Free the duplicated string
     free(inputCopy);
-
 }
 
-// Complete the main function
 int main() {
     char filename [] = "FitnessData_2023.csv";
+    printf("Number of records in file: %d\n", number_of_records(filename, "r"));
     read_from_file(filename, "r");
     return 0;
 }
