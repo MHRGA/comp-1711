@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <ctype.h>
 
 // declaring this value so I can use it in different places
 #define buffer_size 100
@@ -111,7 +112,19 @@ float find_mean(reading* dataArray, int numReadings)
  */
 float find_highest(reading* dataArray, int numReadings)
 {
-    // to do
+    float highest_value;
+    for (int i = 0; i < numReadings; i++)
+    {
+        if (i==0)
+        {
+            highest_value = dataArray[i].bloodIron;
+        }
+        if (dataArray[i].bloodIron > highest_value)
+        {
+            highest_value = dataArray[i].bloodIron;
+        }
+    }
+    return highest_value;
 }
 
 /**
@@ -123,9 +136,13 @@ float find_highest(reading* dataArray, int numReadings)
  */
 float find_lowest(reading* dataArray, int numReadings)
 {
-    int lowest_value = 100;
+    float lowest_value;
     for (int i = 0; i < numReadings; i++)
     {
+        if (i==0)
+        {
+            lowest_value = dataArray[i].bloodIron;
+        }
         if (dataArray[i].bloodIron < lowest_value)
         {
             lowest_value = dataArray[i].bloodIron;
@@ -143,5 +160,48 @@ float find_lowest(reading* dataArray, int numReadings)
  */
 void monthly_iron(reading* dataArray, int numReadings)
 {
-    // to do
+    char choice[9];
+    printf("What month do you want to view? ");
+    scanf("%s", choice);
+    for (int i = 0; i < strlen(choice); i++)
+    {
+        choice[i] = toupper(choice[i]);
+    }
+    if(strcmp(choice, "SEPTEMBER") == 0)
+    {
+        char *sample = "SEP";
+        for(int i = 0; i < numReadings; i++)
+        {
+            if(strstr(dataArray[i].date,sample) != NULL)
+            {
+                printf("%s - Blood iron: %.1f\n", dataArray[i].date, dataArray[i].bloodIron);
+            }
+        }
+    }
+    else if(strcmp(choice, "OCTOBER") == 0)
+    {
+        char *sample = "OCT";
+        for(int i = 0; i < numReadings; i++)
+        {
+            if(strstr(dataArray[i].date,sample) != NULL)
+            {
+                printf("%s - Blood iron: %.1f\n", dataArray[i].date, dataArray[i].bloodIron);
+            }
+        }
+    }
+    else if(strcmp(choice, "NOVEMBER") == 0)
+    {
+        char *sample = "NOV";
+        for(int i = 0; i < numReadings; i++)
+        {
+            if(strstr(dataArray[i].date,sample) != NULL)
+            {
+                printf("%s - Blood iron: %.1f\n", dataArray[i].date, dataArray[i].bloodIron);
+            }
+        }
+    }
+    else
+    {
+        printf("Invalid Choice\n");
+    }
 }

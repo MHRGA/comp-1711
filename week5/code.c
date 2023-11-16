@@ -1,4 +1,5 @@
 #include "utilities.h"
+#include <ctype.h>
 
 int main()
 {
@@ -33,6 +34,11 @@ int main()
         // split up the line and store it in the right place
         // using the & operator to pass in a pointer to the bloodIron so it stores it
         tokeniseRecord(line, ",", daily_readings[counter].date, &daily_readings[counter].bloodIron);
+        if(daily_readings[counter].date==NULL || daily_readings[counter].bloodIron==0)
+        {
+            printf("bad data\n");
+            return 0;
+        }
         mean += daily_readings[counter].bloodIron;
         counter++;
     }
@@ -59,11 +65,10 @@ int main()
 
 
         // switch statement to control the menu.
-        switch (choice)
+        switch (toupper(choice))
         {
         // this allows for either capital or lower case
         case 'A':
-        case 'a':
             for (int i = 0; i < counter; i++)
             {
                 printf("%s - Blood iron: %.1f\n", daily_readings[i].date, daily_readings[i].bloodIron);
@@ -71,43 +76,26 @@ int main()
             break;
 
         case 'B':
-        case 'b':
             mean /= counter;
             printf("Your average blood iron was %.2f\n", mean);
             break;
 
         case 'C':
-        case 'c':
-            find_lowest(daily_readings, counter);
-            return 0;
+            printf("%.1f\n",find_lowest(daily_readings, counter));
             break;
-
         case 'D':
-        case 'd':
-            return 0;
+            printf("%.1f\n",find_highest(daily_readings, counter));
             break;
-
         case 'E':
-        case 'e':
-            return 0;
+            monthly_iron(daily_readings, counter);
             break;
-
         case 'F':
-        case 'f':
-            return 0;
             break;
-
         case 'G':
-        case 'g':
-            return 0;
             break;
-
         case 'Q':
-        case 'q':
             return 0;
             break;
-
-        // if they type anything else:
         default:
             printf("Invalid choice\n");
             break;
