@@ -36,7 +36,7 @@ FILE *open_file(char filename[], char mode[])
 {
     FILE *file = fopen(filename , mode);
 	if (file == NULL) {
-        perror("");
+        printf("Error: Could not find or open the file.\n");
         exit(1);
     }
 	return file;
@@ -57,8 +57,18 @@ void read_from_file(FILE *file, FITNESS_DATA data)
 		strcpy(data.date, my_date);
 		strcpy(data.time, my_time);
 		data.steps = atoi(my_steps);
-		printf("%s %s %d \n", data.date, data.time, data.steps);
 	}
+    printf("File successfully loaded.\n");
+}
+
+int number_of_records(FILE *file) {
+    int buffer_size = 100;
+    char line_buffer[buffer_size];
+    int i;
+    while (fgets(line_buffer, buffer_size, file) != NULL) {
+        i++;
+    }
+    return i;
 }
 
 #endif
