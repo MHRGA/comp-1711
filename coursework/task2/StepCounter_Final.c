@@ -6,11 +6,11 @@
 
 
 int main() {
-    char choice;
     char filename[100];
     while(1)
     {
-        printf("Menu Options:\n");
+        char choice[2];
+        printf("1st Menu Options:\n");
         printf("A: Specify the filename to be imported\n");
         printf("B: Display the total number of records in the file\n");
         printf("C: Find the date and time of the timeslot with the fewest steps\n");
@@ -19,9 +19,8 @@ int main() {
         printf("F: Find the longest continuous period where the step count is above 500 steps\n");
         printf("Q: Quit\n");
         printf("Enter choice: ");
-        choice = getchar();
-        while (getchar() != '\n');
-        while (toupper(choice) != 'A' && toupper(choice) != 'B' && toupper(choice) != 'C' && toupper(choice) != 'D' && toupper(choice) != 'E' && toupper(choice) != 'F' && toupper(choice) != 'Q')
+        scanf("%s",choice);
+        while (toupper(choice[0]) != 'A' && toupper(choice[0]) != 'B' && toupper(choice[0]) != 'C' && toupper(choice[0]) != 'D' && toupper(choice[0]) != 'E' && toupper(choice[0]) != 'F' && toupper(choice[0]) != 'Q')
         {
             printf("Invalid choice. Try again.\n");
             printf("Menu Options:\n");
@@ -33,10 +32,9 @@ int main() {
             printf("F: Find the longest continuous period where the step count is above 500 steps\n");
             printf("Q: Quit\n");
             printf("Enter choice: ");
-            choice = getchar();
-            while (getchar() != '\n');
+            scanf("%s",choice);
         }
-        switch (toupper(choice))
+        switch (toupper(choice[0]))
         {
             case 'A':
                 printf("Please enter the name of the file you want to open: ");

@@ -12,7 +12,7 @@ typedef struct {
 } FITNESS_DATA;
 
 FILE *open_file(char filename[], char mode[]);
-void read_from_file(FILE *file, FITNESS_DATA data);
+FITNESS_DATA read_from_file(FILE *file, FITNESS_DATA data);
 int number_of_records(FILE *file);
 
 void tokeniseRecord(const char *input, const char *delimiter, char *date, char *time, char *steps) {
@@ -42,8 +42,12 @@ FILE *open_file(char filename[], char mode[])
 	return file;
 }
 
-void read_from_file(FILE *file, FITNESS_DATA data)
+FITNESS_DATA read_from_file(FILE *file, FITNESS_DATA data)
 {
+    int i = 0;
+    int length = 0;
+    FITNESS_DATA *array;
+    array = malloc(sizeof(data) * length);
 	int buffer_size = 100;
     char line_buffer[buffer_size];
     while (fgets(line_buffer, buffer_size, file) != NULL) {
@@ -54,11 +58,15 @@ void read_from_file(FILE *file, FITNESS_DATA data)
         char my_time[6];
         char my_steps[8];
         tokeniseRecord(dataline, &my_delimiter, my_date, my_time, my_steps);
-		strcpy(data.date, my_date);
-		strcpy(data.time, my_time);
-		data.steps = atoi(my_steps);
+		length++;
+        array = realloc(array, sizeof(data) * length);
+        strcpy(array[i].date, my_date);
+        strcpy(array[i].time, my_time);
+        array[i].steps = atoi(my_steps);
+        i++;
 	}
     printf("File successfully loaded.\n");
+    return *array;
 }
 
 int number_of_records(FILE *file) {
