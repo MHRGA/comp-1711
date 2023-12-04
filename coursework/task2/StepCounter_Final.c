@@ -40,11 +40,10 @@ int main() {
                 printf("Please enter the name of the file you want to open: ");
                 scanf("%s", filename);
                 FILE *file = open_file(filename , "r");
-                FITNESS_DATA data;
-                read_from_file(file, data);
+                FITNESS_DATA data = read_from_file(file, data);
                 break;
             case 'B':
-                printf("Total records: %d", number_of_records(file));
+                printf("Total records: %d", number_of_records(array));
                 break;
         }
     }
