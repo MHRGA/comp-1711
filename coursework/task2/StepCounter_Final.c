@@ -7,10 +7,11 @@
 
 int main() {
     char filename[100];
+    FITNESS_DATA *data;
     while(1)
     {
         char choice[2];
-        printf("1st Menu Options:\n");
+        printf("Menu Options:\n");
         printf("A: Specify the filename to be imported\n");
         printf("B: Display the total number of records in the file\n");
         printf("C: Find the date and time of the timeslot with the fewest steps\n");
@@ -40,10 +41,10 @@ int main() {
                 printf("Please enter the name of the file you want to open: ");
                 scanf("%s", filename);
                 FILE *file = open_file(filename , "r");
-                FITNESS_DATA data = read_from_file(file, data);
+                FITNESS_DATA array[] = read_from_file(file, data);
                 break;
             case 'B':
-                printf("Total records: %d", number_of_records(array));
+                printf("Total records: ");
                 break;
         }
     }

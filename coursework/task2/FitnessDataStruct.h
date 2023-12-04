@@ -12,8 +12,7 @@ typedef struct {
 } FITNESS_DATA;
 
 FILE *open_file(char filename[], char mode[]);
-FITNESS_DATA read_from_file(FILE *file, FITNESS_DATA data);
-int number_of_records(FILE *file);
+FITNESS_DATA* read_from_file(FILE *file, FITNESS_DATA data);
 
 void tokeniseRecord(const char *input, const char *delimiter, char *date, char *time, char *steps) {
     char *inputCopy = strdup(input);
@@ -42,7 +41,7 @@ FILE *open_file(char filename[], char mode[])
 	return file;
 }
 
-FITNESS_DATA read_from_file(FILE *file, FITNESS_DATA data)
+FITNESS_DATA* read_from_file(FILE *file, FITNESS_DATA data)
 {
     int i = 0;
     int length = 1;
@@ -62,12 +61,9 @@ FITNESS_DATA read_from_file(FILE *file, FITNESS_DATA data)
         i++;
 	}
     printf("File successfully loaded.\n");
-    return *array;
+    return array;
 }
 
-int number_of_records(FITNESS_DATA array[]) {
-    int i;
-    return i;
-}
+
 
 #endif
