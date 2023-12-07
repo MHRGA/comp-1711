@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 typedef struct {
 	char date[11];
@@ -108,7 +109,7 @@ int mean(int records, FITNESS_DATA *data)
         total += data[i].steps;
     }
     int mean = total/records;
-    return mean;
+    return round(mean);
 }
 
 void longest_period(int records, FITNESS_DATA *data)
