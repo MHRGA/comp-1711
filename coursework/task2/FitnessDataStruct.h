@@ -108,7 +108,7 @@ int mean(int records, FITNESS_DATA *data)
     {
         total += data[i].steps;
     }
-    int mean = total/records;
+    float mean = total/records;
     return round(mean);
 }
 
