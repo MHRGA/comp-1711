@@ -94,7 +94,7 @@ void check_record(char date, char time)
     if (date != '-' || time != ':')
     {
         printf("Error: File incorrectly formatted.\n");
-        exit(0);
+        exit(1);
     }
 }
 
