@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 typedef struct {
     char date[11];
@@ -51,42 +52,23 @@ void swap_record(int a, int b, FITNESS_DATA *data)
     data[b].steps = temp_steps;
 }
 
-int fewest_steps(int records, FITNESS_DATA *data)
+void bubble_sort(int records, FITNESS_DATA *data)
 {
-    int pointer;
-    int lowest = -1;
-    for(int i = 0; i < records; i++)
-    {
-        if (lowest == -1)
-        {
-            lowest = data[i].steps;
+    bool swapped;
+    for (int i = 0; i < records; i++) {
+        swapped = false;
+        for (int j = 0; j < records - i - 1; j++) {
+            if (data[j].steps < data[j + 1].steps) 
+            {
+                swap_record(j, j+1, data);
+                swapped = true;
+            }
         }
-        if (data[i].steps < lowest)
+        if (swapped == false)
         {
-            lowest = data[i].steps;
-            pointer = i;
+            break;
         }
     }
-    return pointer;
-}
-
-int largest_steps(int records, FITNESS_DATA *data)
-{
-    int pointer;
-    int highest = -1;
-    for(int i = 0; i < records; i++)
-    {
-        if (highest == -1)
-        {
-            highest = data[i].steps;
-        }
-        if (data[i].steps > highest)
-        {
-            highest = data[i].steps;
-            pointer = i;
-        }
-    }
-    return pointer;
 }
 
 void check_record(char date, char time)
@@ -131,9 +113,6 @@ int main() {
     scanf("%s", filename);
     FILE *file = open_file(filename, "r");
     int records = read_from_file(file, data);
-    int lowest_pointer = fewest_steps(records, data);
-    int highest_pointer = largest_steps(records, data);
-    swap_record(lowest_pointer, records - 1, data);
-    swap_record(highest_pointer, 0, data);
+    bubble_sort(records,data);
     write_to_file(data, records, filename);
 }
