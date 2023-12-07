@@ -103,13 +103,14 @@ int largest_steps(int records, FITNESS_DATA *data)
 
 int mean(int records, FITNESS_DATA *data)
 {
-    int total = 0;
+    float total = 0;
     for(int i = 0; i < records; i++)
     {
         total += data[i].steps;
     }
     float mean = total/records;
-    return round(mean);
+    int rounded = round(mean);
+    return rounded;
 }
 
 void longest_period(int records, FITNESS_DATA *data)
