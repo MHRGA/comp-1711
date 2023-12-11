@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 typedef struct {
     char date[11];
@@ -32,7 +33,7 @@ void write_to_file(FITNESS_DATA *data, int records, char filename[])
     FILE *newfile = fopen(filename, "w");
     for (int i = 0; i < records; i++)
     {
-        fprintf(newfile, "%s\t%s\t%d \n", data[i].date, data[i].time, data[i].steps);
+        fprintf(newfile, "%s\t%s\t%d\n", data[i].date, data[i].time, data[i].steps);
     }
     fclose(newfile);
 }
@@ -71,8 +72,20 @@ void bubble_sort(int records, FITNESS_DATA *data)
     }
 }
 
-void check_record(char date, char time)
+void check_record(char date, char time, char my_steps[])
 {
+    for(int i = 0; i < strlen(my_steps); i++)
+    {
+        if (isdigit(my_steps[i]))
+        {
+            break;
+        }
+        else
+        {
+            printf("Error: File incorrectly formatted.\n");
+            exit(1);
+        }
+    }
     if (date != '-' || time != ':')
     {
         printf("Error: File incorrectly formatted.\n");
@@ -90,7 +103,7 @@ int read_from_file(FILE *file, FITNESS_DATA *data)
         char my_steps[10];
         tokeniseRecord(line_buffer, ",", data[i].date, data[i].time, my_steps);
         data[i].steps = atoi(my_steps);
-        check_record(data[i].date[4], data[i].time[2]);
+        check_record(data[i].date[4], data[i].time[2], my_steps);
         i++;
 	}
     return i;
